@@ -1,5 +1,6 @@
 package model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,11 +20,11 @@ public class Compte {
 	// Attributs
 	@Id
 	private long numeroCompte;
-	
-	@ManyToOne
-	@JoinColumn(name="client_id")
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinColumn(name = "client_id")
 	private Client client;
-	
+
 	private double solde;
 	private String dateOuverture;
 
@@ -32,13 +33,23 @@ public class Compte {
 		setSolde(solde);
 		this.dateOuverture = dateOuverture;
 	}
+
 	public Compte() {
 		super();
 	}
 
 	// Getters et setters
+
 	public long getNumeroCompte() {
 		return numeroCompte;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	public void setNumeroCompte(long numeroCompte) {

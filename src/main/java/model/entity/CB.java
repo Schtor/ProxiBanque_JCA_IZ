@@ -1,9 +1,12 @@
 package model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import model.entity.Client;
 
 /**
  * Classe CB caractérisée par un numéro de carte, un plafond de retrait et du
@@ -19,11 +22,12 @@ public class CB {
 	@Id
 	private long numeroCarte;
 	
-	@ManyToOne
+
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="client_id")
 	private Client client;
 	
-	private int PLAFONDRETRAIT = 300;
+	private int plafondRetrait = 300;
 	private String typeCarte;
 
 	// Constructeur
@@ -37,6 +41,13 @@ public class CB {
 
 
 	// Getters et setters
+	public Client getClient() {
+		return client;
+	}
+	
+	public void setClient(Client client) {
+		this.client = client;
+	}
 	public long getNumeroCarte() {
 		return numeroCarte;
 	}
@@ -46,11 +57,11 @@ public class CB {
 	}
 
 	public int getPlafondRetrait() {
-		return PLAFONDRETRAIT;
+		return plafondRetrait;
 	}
 
 	public void setPlafondRetrait(int plafondRetrait) {
-		this.PLAFONDRETRAIT = plafondRetrait;
+		this.plafondRetrait = plafondRetrait;
 	}
 
 	public String getTypeCarte() {

@@ -15,7 +15,8 @@ import javax.persistence.Entity;
 @Entity
 public class CompteCourant extends Compte {
 
-//	Attribut
+
+	//	Attribut
 	private int autorisationDecouvert = 1000;
 
 //	Constructeur
@@ -43,6 +44,16 @@ public class CompteCourant extends Compte {
 	public String toString() {
 		return "numéro de compte : " + getNumeroCompte() + ", solde : " + getSolde() + "€" + ", date d'ouverture : "
 				+ getDateOuverture();
+	}
+	@Override
+	public Client getClient() {
+		return super.getClient();
+	}
+	
+	
+	@Override
+	public void setClient(Client client) {
+		super.setClient(client);
 	}
 
 }

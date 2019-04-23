@@ -35,11 +35,11 @@ public class Conseiller extends Employe {
 	}
 
 //	Getter et setter
-	public Set<Client> getListeClient() {
+	public Set<Client> getSetClient() {
 		return setClient;
 	}
 
-	public void setListeClient(Set<Client> setClient) {
+	public void setSetClient(Set<Client> setClient) {
 		this.setClient = setClient;
 	}
 

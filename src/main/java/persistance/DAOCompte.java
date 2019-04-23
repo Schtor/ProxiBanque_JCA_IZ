@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 public class DAOCompte {
 
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("etu-ens");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction txn = em.getTransaction();
 	}

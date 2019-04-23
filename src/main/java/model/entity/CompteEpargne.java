@@ -40,5 +40,16 @@ public class CompteEpargne extends Compte {
 		return "numéro de compte : " + getNumeroCompte() + ", épargne : " + getSolde() + "€" + ", date d'ouverture : "
 				+ getDateOuverture();
 	}
+	
+	@Override
+	public Client getClient() {
+		return super.getClient();
+	}
+	
+	
+	@Override
+	public void setClient(Client client) {
+		super.setClient(client);
+	}
 
 }

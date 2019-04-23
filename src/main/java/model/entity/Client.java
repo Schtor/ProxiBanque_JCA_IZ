@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+
 /**
  * Classe Client caractérisée par un id, un nom, une adresse, un code postal,
  * une ville, un téléphone. Il possède obligatiorement un compte courant et peut
@@ -32,10 +33,11 @@ public class Client {
 	@OneToMany(mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Set<Compte> setCompte = new HashSet<Compte>();
 	
+
 	@OneToMany(mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Set<CB> setCB = new HashSet<CB>();
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="conseiller_id")
 	private Conseiller conseiller;
 		
@@ -44,9 +46,6 @@ public class Client {
 	private int codePostal;
 	private String ville;
 	private String telephone;
-	private CompteCourant compteCourant;
-	private CompteEpargne compteEpargne;
-	private CB carteBancaire;
 
 //	Constructeur
 	public Client(String nom, String adresse, int codePostal, String ville, String telephone) {
@@ -58,11 +57,19 @@ public class Client {
 		this.telephone = telephone;
 	}
 	
+
 	public Client() {
 		super();
 	}
 
 //	Getters et setters
+	public Conseiller getConseiller() {
+		return conseiller;
+	}
+	
+	public void setConseiller(Conseiller conseiller) {
+		this.conseiller = conseiller;
+	}
 
 	public int getId() {
 		return id;
@@ -112,28 +119,24 @@ public class Client {
 		this.telephone = telephone;
 	}
 
-	public CompteCourant getCompteCourant() {
-		return compteCourant;
+
+	public Set<CB> getSetCB() {
+		return setCB;
 	}
 
-	public void setCompteCourant(CompteCourant compteCourant) {
-		this.compteCourant = compteCourant;
+
+	public void setSetCB(Set<CB> setCB) {
+		this.setCB = setCB;
 	}
 
-	public CompteEpargne getCompteEpargne() {
-		return compteEpargne;
+
+	public Set<Compte> getSetCompte() {
+		return setCompte;
 	}
 
-	public void setCompteEpargne(CompteEpargne compteEpargne) {
-		this.compteEpargne = compteEpargne;
-	}
 
-	public CB getCarteBancaire() {
-		return carteBancaire;
-	}
-
-	public void setCarteBancaire(CB carteBancaire) {
-		this.carteBancaire = carteBancaire;
+	public void setSetCompte(Set<Compte> setCompte) {
+		this.setCompte = setCompte;
 	}
 
 }
