@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 
 /**
  * Classe CompteCourant caractérisée par une autorisation de découvert et qui
- * hérite de la classe Compte.
+ * hérite de la classe Compte. C'est une entité qui apparait directement dans la table 
+ * Compte dans la base de données.
  * 
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
 public class CompteCourant extends Compte {
 
@@ -20,11 +20,11 @@ public class CompteCourant extends Compte {
 	private int autorisationDecouvert = 1000;
 
 //	Constructeur
-	public CompteCourant(double solde, String dateOuverture) {
-		super(solde, dateOuverture);
+	public CompteCourant(int solde, Long numeroCompte, String dateOuverture, Client c) {
+		super(solde, numeroCompte, dateOuverture, c);
 	}
 
-
+	
 	public CompteCourant() {
 		super();
 	}

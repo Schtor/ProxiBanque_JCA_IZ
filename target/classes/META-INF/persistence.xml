@@ -6,7 +6,7 @@
 
 	<persistence-unit name="pu"
 		transaction-type="RESOURCE_LOCAL">
-
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
 
 			<!-- Database connection settings -->
@@ -32,6 +32,10 @@
 
 	</persistence-unit>
 </persistence>
+
+
+
+
 
 
 

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,14 +17,17 @@ import javax.persistence.OneToMany;
 
 /**
  * Classe Client caractérisée par un id, un nom, une adresse, un code postal,
- * une ville, un téléphone. Il possède obligatiorement un compte courant et peut
- * possèder un compte épargne et une carte bancaire.
+ * une ville, un téléphone. On lui ajoute en attribut des objets Conseiller, un SetCompte qui comptient des 
+ * CompteCourant et CompteEpargne, et un SetCB qui contient des objets CB. C'est une entité qui donnera une
+ * table dans la base de donnée. Sa PK correspond à l'attribut Id, dont la valeur est générée automatiquement
+ * et elle est un attribut de l'entité Conseiller, prenant donc une FK conseiller_id. C'est la classe mère de 
+ * Particulier et Entreprise, qui apparaitront donc dans la table client dans la base de données.
  * 
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Client {
 
 //	Attributs
@@ -46,17 +51,20 @@ public class Client {
 	private int codePostal;
 	private String ville;
 	private String telephone;
+	private String prenom;
+	private Long numeroSIRET;
 
 //	Constructeur
-	public Client(String nom, String adresse, int codePostal, String ville, String telephone) {
+	public Client(String nom, String adresse, int codePostal, String ville, String telephone, Conseiller co) {
 		super();
 		this.nom = nom;
 		this.adresse = adresse;
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.telephone = telephone;
+		this.conseiller = co;
 	}
-	
+
 
 	public Client() {
 		super();
@@ -139,4 +147,33 @@ public class Client {
 		this.setCompte = setCompte;
 	}
 
+
+
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+
+
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+
+
+
+	public Long getNumeroSIRET() {
+		return numeroSIRET;
+	}
+
+
+
+
+	public void setNumeroSIRET(Long numeroSIRET) {
+		this.numeroSIRET = numeroSIRET;
+	}
+
+	
 }

@@ -9,8 +9,9 @@ import javax.persistence.ManyToOne;
 import model.entity.Client;
 
 /**
- * Classe CB caractérisée par un numéro de carte, un plafond de retrait et du
- * type de carte.
+ * Classe CB caractérisée par un numéro de carte, un plafond de retrait, un
+ * type de carte et un attribut client. C'est une entité qui donnera une table dans la base de donnée. Sa PK 
+ * correspond au numero de carte, et elle est un attribut de l'entité Client, prenant donc une FK client_id.
  * 
  * @author Jean-Charles & Ihab
  *
@@ -35,6 +36,12 @@ public class CB {
 		this.typeCarte = typeCarte;
 	}
 	
+	public CB(long numeroCarte, Client c) {
+		super();
+		this.numeroCarte = numeroCarte;
+		this.client = c;
+	}
+
 	public CB() {
 		super();
 	}

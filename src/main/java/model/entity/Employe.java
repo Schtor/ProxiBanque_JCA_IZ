@@ -6,12 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Classe Employe caractérisée par un id, un nom et un prénom.
+ * Classe Employe caractérisée par un id, un nom et un prénom. C'est une entité qui donnera une table dans la
+ * base de donnée. Sa PK correspond à l'attribut Id, dont la valeur est générée automatiquementet. 
+ * C'est la classe mère de Conseiller et Gerant, qui apparaitront donc dans la table Employe
+ * dans la base de données.
  * 
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
 public class Employe {
 

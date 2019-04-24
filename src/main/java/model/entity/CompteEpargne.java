@@ -4,13 +4,13 @@ package model.entity;
 import javax.persistence.Entity;
 
 /**
- * Classe CompteEpargne caractérisée par un taux de rémunération qui hérite de
- * la classe Compte.
+ * Classe CompteEpargne caractérisée par un taux de rémunération et qui
+ * hérite de la classe Compte. C'est une entité qui apparait directement dans la table 
+ * Compte dans la base de données.
  * 
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
 public class CompteEpargne extends Compte {
 
@@ -18,8 +18,9 @@ public class CompteEpargne extends Compte {
 	private int tauxRemuneration = 3;
 
 //	Constructeur
-	public CompteEpargne(double solde, String dateOuverture) {
-		super(solde, dateOuverture);
+	public CompteEpargne(int solde, Long numeroCompte, String dateOuverture, Client c) {
+		super(solde, numeroCompte, dateOuverture, c);
+
 	}
 
 	public CompteEpargne() {

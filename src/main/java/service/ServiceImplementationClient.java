@@ -2,17 +2,12 @@ package service;
 
 import java.util.List;
 
-
-import model.entity.CB;
 import model.entity.Client;
-import model.entity.CompteCourant;
-import model.entity.CompteEpargne;
-import persistance.ClientDAO;
-import persistance.ClientMemoireDAO;
-
-import model.entity.Client;
-import persistance.DAOClient;
-
+import model.entity.Entreprise;
+import model.entity.Particulier;
+import persistance.DAOEntreprise;
+import persistance.DAOParticulier;
+import persistance.DAOScenario;
 
 /**
  * Classe ServiceImplementationClient qui implémente l'interface ClientService.
@@ -24,7 +19,17 @@ import persistance.DAOClient;
  */
 public class ServiceImplementationClient implements ClientService {
 
-	/**
+	DAOScenario daos = new DAOScenario();
+	DAOParticulier daop = new DAOParticulier();
+	DAOEntreprise daoe = new DAOEntreprise();
+	Client c = new Client();
+
+	
+	public void lancerScenario () {
+		daos.scenario();	
+	}
+		
+	 /**
 	 * Méthode appelant la sauvegarde d'un client dans la base de données clients.
 	 * Les numéros de compte (courant, épargne) et le numéro de carte bancaire sont
 	 * générés à condition que le client possède ces comptes et une carte bancaire.
@@ -32,23 +37,10 @@ public class ServiceImplementationClient implements ClientService {
 	 * @param Client c
 	 */
 	public void ajouterClient(Client c) {
-		if (c != null) {
-			// Sauvegarde le client dans DAO
-			DAOClient.sauvegarderClient(c);
-			// Genere le numero de compte courant du client
-			if (c.getCompteCourant() != null) {
-				c.getCompteCourant().setNumeroCompte(genereNumeroCompte());
-			}
-
-			// Genere le numero de compte epargne du client
-			if (c.getCompteEpargne() != null) {
-				c.getCompteEpargne().setNumeroCompte(genereNumeroCompte());
-			}
-
-			// Genere numero de carte du client
-			if (c.getCarteBancaire() != null) {
-				c.getCarteBancaire().setNumeroCarte(genereNumeroCarte());
-			}
+		if (c instanceof Particulier) {
+			daop.sauvegarderClient(c);
+		} else if (c instanceof Entreprise) {
+			daoe.sauvegarderClient(c);
 		}
 	}
 
@@ -57,8 +49,13 @@ public class ServiceImplementationClient implements ClientService {
 	 * 
 	 * @param int id
 	 */
-	public Client trouverClientValide(int id) {
-		return DAOClient.afficherClientParId(id);
+	public Client trouverClient(int id) {
+		if (c instanceof Particulier) {
+			daop.afficherClientParId(id);
+		} else if (c instanceof Entreprise) {
+			daoe.afficherClientParId(id);
+		}
+		return c;
 	}
 
 	/**
@@ -67,7 +64,8 @@ public class ServiceImplementationClient implements ClientService {
 	 * 
 	 */
 	public List<Client> trouverToutClient() {
-		return DAOClient.afficherTout();
+
+		return daop.afficherTout();
 	}
 
 	/**
@@ -77,9 +75,34 @@ public class ServiceImplementationClient implements ClientService {
 	 * @param int id, String adresse
 	 */
 	public void modifierAdresseClient(int id, String adresse) {
-		DAOClient.modifierAdresseClientParId(id, adresse);
+		if (c instanceof Particulier) {
+			daop.modifierAdresseClientParId(id, adresse);
+		} else if (c instanceof Entreprise) {
+			daoe.modifierAdresseClientParId(id, adresse);
+		}
 	}
 
+	/**
+	 * Méthode appelant la modification du SIRET d'une entreprise dans la base de
+	 * données clients.
+	 * 
+	 * @param int id, String adresse
+	 */
+	
+	public void modifierSiretClientParId(int id, Long siret) {
+		daoe.modifierSiretClientParId(id, siret);
+	}
+	
+	/**
+	 * Méthode appelant la modification du prénom d'un client dans la base de
+	 * données clients.
+	 * 
+	 * @param int id, String adresse
+	 */
+	public void modifierPrenomClientParId(int id, String prenom) {
+		daop.modifierPrenomClientParId(id, prenom);
+	}
+	
 	/**
 	 * Méthode appelant la modification du code postal d'un client dans la base de
 	 * données clients.
@@ -87,7 +110,11 @@ public class ServiceImplementationClient implements ClientService {
 	 * @param int id, int codePostal
 	 */
 	public void modifierCodePostalClient(int id, int codePostal) {
-		DAOClient.modifierCodePostalClientParId(id, codePostal);
+		if (c instanceof Particulier) {
+			daop.modifierCodePostalClientParId(id, codePostal);
+		} else if (c instanceof Entreprise) {
+			daoe.modifierCodePostalClientParId(id, codePostal);
+		}
 	}
 
 	/**
@@ -97,7 +124,11 @@ public class ServiceImplementationClient implements ClientService {
 	 * @param int id, String ville
 	 */
 	public void modifierVilleClient(int id, String ville) {
-		DAOClient.modifierVilleClientParId(id, ville);
+		if (c instanceof Particulier) {
+			daop.modifierVilleClientParId(id, ville);
+		} else if (c instanceof Entreprise) {
+			daoe.modifierVilleClientParId(id, ville);
+		}
 	}
 
 	/**
@@ -107,23 +138,27 @@ public class ServiceImplementationClient implements ClientService {
 	 * @param int id, String telephone
 	 */
 	public void modifierTelephoneClient(int id, String telephone) {
-		DAOClient.modifierTelephoneClientParId(id, telephone);
-	}
+		if (c instanceof Particulier) {
+			daop.modifierTelephoneClientParId(id, telephone);
+		} else if (c instanceof Entreprise) {
+			daoe.modifierTelephoneClientParId(id, telephone);
+		}
 
-	/**
-	 * Méthode générant un numéro de compte à 11 chiffres.
-	 * 
-	 */
-	private long genereNumeroCompte() {
-		return (long) ((1 + Math.random()) * 10000000000L);
 	}
-
+	
 	/**
-	 * Méthode générant un numéro de carte à 16 chiffres.
+	 * Méthode appelant la modification du numéro de téléphone d'un client dans la
+	 * base de données clients.
 	 * 
+	 * @param int id, String telephone
 	 */
-	private long genereNumeroCarte() {
-		return (long) ((1 + Math.random()) * 1000000000000000L);
+	public void modifierNomClient(int id, String nom) {
+		if (c instanceof Particulier) {
+			daop.modifierNomClientParId(id, nom);
+		} else if (c instanceof Entreprise) {
+			daoe.modifierNomClientParId(id, nom);
+		}
+
 	}
 
 }

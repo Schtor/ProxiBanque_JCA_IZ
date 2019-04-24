@@ -2,23 +2,32 @@ package model.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
- * Classe Compte caractérisée par un numéro de compte, un solde et une date
- * d'ouverture.
+ * Classe Compte caractérisée par un id, un numéro de compte, un solde et une date d'ouverture. On lui ajoute
+ * en attribut des objets Client. C'est une entité qui donnera une table dans la base de donnée. 
+ * Sa PK correspond à l'attribut Id, dont la valeur est générée automatiquementet elle est un attribut 
+ * de l'entité Client, prenant donc une FK client_id. C'est la classe mère de 
+ * CompteCourant et CompteEpargne, qui apparaitront donc dans la table Compte dans la base de données.
  * 
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Compte {
 
 	// Attributs
 	@Id
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	private int id;
 	private long numeroCompte;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
@@ -29,9 +38,11 @@ public class Compte {
 	private String dateOuverture;
 
 	// Constructeur
-	public Compte(double solde, String dateOuverture) {
-		setSolde(solde);
+	public Compte(int solde, Long numeroCompte, String dateOuverture, Client c) {
+		this.solde = solde;
+		this.numeroCompte = numeroCompte;
 		this.dateOuverture = dateOuverture;
+		this.client = c;
 	}
 
 	public Compte() {

@@ -2,10 +2,7 @@ package service;
 
 import java.util.List;
 
-import model.entity.CB;
 import model.entity.Client;
-import model.entity.CompteCourant;
-import model.entity.CompteEpargne;
 
 /**
  * Interface ClientService est composée des règles métiers pour le client et
@@ -29,7 +26,7 @@ public interface ClientService {
 	 * 
 	 * @param int id
 	 */
-	public Client trouverClientValide(int id);
+	public Client trouverClient(int id);
 
 	/**
 	 * Méthode appelant la demande de tous les client dans la base de données
@@ -69,25 +66,14 @@ public interface ClientService {
 	 * @param int id, String telephone
 	 */
 	public void modifierTelephoneClient(int id, String telephone);
-
+	
 	/**
-	 * Méthode permettant d'associer un compte epargne à un client.
+	 * Méthode appelant la modification du nom d'un client dans la
+	 * base de données clients.
 	 * 
-	 * @param CompteEpargne compteEpargne, Client c
+	 * @param int id, String telephone
 	 */
-	public void ajouterCompteEpargne(CompteEpargne compteEpargne, Client c);
+	public void modifierNomClient(int id, String nom);
 
-	/**
-	 * Méthode permettant d'associer un compte courant à un client.
-	 * 
-	 * @param CompteCourant compteCourant, Client c
-	 */
-	public void ajouterCompteCourant(CompteCourant compteCourant, Client c);
 
-	/**
-	 * Méthode permettant d'associer une carte bancaire à un client.
-	 * 
-	 * @param CB cb, Client c
-	 */
-	public void ajouterCarteBancaire(CB cb, Client c);
 }

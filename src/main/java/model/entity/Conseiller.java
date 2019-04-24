@@ -10,12 +10,11 @@ import javax.persistence.OneToMany;
 
 /**
  * Classe Conseiller caractérisée par une liste de clients et qui hérite de la
- * classe Employe.
- * 
+ * classe Employe. Elle apparait directement dans la table Employe dans la base de données.
+ *  
  * @author Jean-Charles & Ihab
  *
  */
-
 @Entity
 public class Conseiller extends Employe {
 
